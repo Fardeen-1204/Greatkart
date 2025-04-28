@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="section-content padding-y bg">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <article class="card border-success">
+          <div class="card-body text-center">
+            <img src="{% static 'images/misc/success.png' %}" height="100" class="mb-4">
+            <h4 class="card-title text-success">Order Placed Successfully!</h4>
+            <h3 class="card-title text-success">Please Pay your Delivery Boy your order amount</h3>
+            <p class="mb-3">Thank you for your purchase. Your order has been placed and is being processed.</p>
+            <p class="mb-2">Order ID: <strong>#{{ order.id }}</strong></p>
+            <p class="mb-2">Total Amount to be Paid: ₹<strong>{{ order.grand_total }}</strong></p>
+            <a href="/" class="btn btn-primary mt-3">Continue Shopping</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

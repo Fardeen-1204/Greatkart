@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="section-content padding-y bg">
+  <div class="container">
+    <h4 class="mb-4">My Orders</h4>
+    {% if orders %}
+      {% for order in orders %}
+        <article class="card mb-4">
+          <div class="card-body">
+            <h6>Order ID: <strong>#{{ order.id }}</strong></h6>
+            <p>
+              Placed on: {{ order.created_at|date:"F d, Y" }}<br>
+              Total: ₹{{ order.grand_total }}<br>
+              Status: <span class="badge badge-info">{{ order.status }}</span>
+            </p>
+            <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
+          </div>
+        </article>
+      {% endfor %}
+    {% else %}
+      <p>You haven't placed any orders yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}

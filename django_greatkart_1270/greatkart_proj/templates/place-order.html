@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+  <div class="container">
+    <form method="POST" action="{% url 'checkout' %}">
+      {% csrf_token %}
+      <div class="row">
+        <!-- Left Section -->
+        <main class="col-md-8">
+
+          <!-- Review Cart -->
+          <article class="card mb-4">
+            <div class="card-body">
+              <h4 class="card-title mb-4">Review cart</h4>
+              <div class="row">
+                {% for item in cart_items %}
+                <div class="col-md-6">
+                  <figure class="itemside mb-4">
+                    <div class="aside">
+                      <img src="{{ item.product.images.url }}" class="border img-sm">
+                    </div>
+                    <figcaption class="info">
+                      <p>{{ item.product.product_name }}</p>
+                      <span class="text-muted">{{ item.quantity }}x = ₹{{ item.subtotal }}</span>
+                    </figcaption>
+                  </figure>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </article>
+
+          <!-- Contact Info -->
+          <article class="card mb-4">
+            <div class="card-body">
+              <h4 class="card-title mb-4">Contact info</h4>
+              <div class="row">
+                <div class="form-group col-sm-6">
+                  <label>First name</label>
+                  <input type="text" name="first_name" class="form-control" required>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label>Last name</label>
+                  <input type="text" name="last_name" class="form-control" required>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label>Phone</label>
+                  <input type="text" name="phone" class="form-control" required>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label>Email</label>
+                  <input type="email" name="email" class="form-control" required>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Delivery Info -->
+          <article class="card mb-4">
+            <div class="card-body">
+              <h4 class="card-title mb-4">Delivery info</h4>
+              <div class="row">
+                <div class="form-group col-sm-6">
+                  <label>Country*</label>
+                  <select name="country" class="form-control" required>
+                    <option value="India">India</option>
+                    <option value="United States">United States</option>
+                    <option value="France">France</option>
+                    <option value="Italy">Italy</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label>State*</label>
+                  <input type="text" name="state" class="form-control" required>
+                </div>
+                <div class="form-group col-sm-8">
+                  <label>Street*</label>
+                  <input type="text" name="address" class="form-control" required>
+                </div>
+                <div class="form-group col-sm-4">
+                  <label>Building</label>
+                  <input type="text" name="building" class="form-control">
+                </div>
+                <div class="form-group col-sm-4">
+                  <label>House</label>
+                  <input type="text" name="house" class="form-control">
+                </div>
+                <div class="form-group col-sm-4">
+                  <label>Postal code</label>
+                  <input type="text" name="postal_code" class="form-control">
+                </div>
+                <div class="form-group col-sm-4">
+                  <label>Zip</label>
+                  <input type="text" name="zip" class="form-control">
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Payment Options -->
+          <article class="accordion" id="accordion_pay">
+
+            
+            <div class="card">
+              <header class="card-header">
+
+                <label class="form-check"  data-target="#pay_card">
+                  <input class="form-check-input" checked name="payment_option" type="radio" value="Cash">
+                  <h6 class="form-check-label">Cash</h6>
+                </label>
+              </header>
+              
+            </div>
+            <div class="card">
+              <header class="card-header">
+                
+                <label class="form-check"  data-target="#pay_card">
+                  <input class="form-check-input" name="payment_option" type="radio" value="UPI">
+                  <h6 class="form-check-label">UPI</h6>
+                </label>
+              </header>
+              
+            </div>
+          </article>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <dl class="dlist-align">
+                <dt>Total price:</dt>
+                <dd class="text-right">₹{{ total_price }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Tax:</dt>
+                <dd class="text-right">₹{{ tax }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Total:</dt>
+                <dd class="text-right text-dark b"><strong>₹{{ grand_total }}</strong></dd>
+              </dl>
+              <hr>
+              
+              <input type="hidden" name="total" value="{{ grand_total }}">
+              <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock content %}

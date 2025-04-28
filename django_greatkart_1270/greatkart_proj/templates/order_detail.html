@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section-content padding-y bg">
+  <div class="container">
+    <h4 class="mb-4">Order Details</h4>
+    <h6>Order ID: <strong>#{{ order.id }}</strong></h6>
+    <p>
+      Placed on: {{ order.created_at|date:"F d, Y" }}<br>
+      Status: <span class="badge badge-info">{{ order.status }}</span><br>
+      Total: ₹{{ order.grand_total }}<br>
+    </p>
+
+    <h5 class="mt-4">Items in this Order</h5>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.order_items.all %}
+          <tr>
+            <td>{{ item.product.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>₹{{ item.subtotal }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock content %}
